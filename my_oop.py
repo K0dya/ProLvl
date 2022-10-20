@@ -14,16 +14,18 @@ class App:
         self.cap = cv2.VideoCapture(self.source)
         # self.cap.set(3, 480)
         # self.cap.set(4, 270)
-        self.cap.set(cv2.CAP_PROP_FPS, 100)
-        ret, self.frame = self.cap.read()
-        self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
-        self.resized = cv2.resize(self.frame, (480, 270), interpolation = cv2.INTER_AREA)
-        self.img = Image.fromarray(self.resized)
-        # self.img = self.img.resize((100,100))
-        imgTk = ImageTk.PhotoImage(image=self.img)
-        self.label.imgTk = imgTk
-        self.label.configure(image = imgTk)
-        self.label.after(10, self.call_video)
+        # self.cap.set(cv2.CAP_PROP_FPS, 100)
+        ret, self.frameP = self.cap.read()
+        if ret == 10:
+            self.frame = self.frameP
+            self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
+            self.resized = cv2.resize(self.frame, (480, 270), interpolation = cv2.INTER_AREA)
+            self.img = Image.fromarray(self.resized)
+            # self.img = self.img.resize((100,100))
+            imgTk = ImageTk.PhotoImage(image=self.img)
+            self.label.imgTk = imgTk
+            self.label.configure(image = imgTk)
+            self.label.after(10, self.call_video)
         # cv2.imshow("frame", self.frame)
         # cv2.waitKey(0)
 
