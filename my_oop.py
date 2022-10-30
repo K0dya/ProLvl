@@ -7,6 +7,7 @@ class App:
     def __init__(self, source, n):
         self.source = source
         self.n = n
+        self.count = 0
 
     def call_video(self):
         # self.capimg = self.cap.copy()
@@ -16,16 +17,17 @@ class App:
         # self.cap.set(4, 270)
         # self.cap.set(cv2.CAP_PROP_FPS, 100)
         ret, self.frameP = self.cap.read()
-        if ret == 10:
-            self.frame = self.frameP
-            self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
-            self.resized = cv2.resize(self.frame, (480, 270), interpolation = cv2.INTER_AREA)
-            self.img = Image.fromarray(self.resized)
-            # self.img = self.img.resize((100,100))
-            imgTk = ImageTk.PhotoImage(image=self.img)
-            self.label.imgTk = imgTk
-            self.label.configure(image = imgTk)
-            self.label.after(10, self.call_video)
+        self.count += 5 # i.e. at 30 fps, this advances one second
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.count)
+        self.frame = self.frameP
+        self.frame = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
+        self.resized = cv2.resize(self.frame, (480, 270), interpolation = cv2.INTER_AREA)
+        self.img = Image.fromarray(self.resized)
+        # self.img = self.img.resize((100,100))
+        imgTk = ImageTk.PhotoImage(image=self.img)
+        self.label.imgTk = imgTk
+        self.label.configure(image = imgTk)
+        self.label.after(20, self.call_video)
         # cv2.imshow("frame", self.frame)
         # cv2.waitKey(0)
 
