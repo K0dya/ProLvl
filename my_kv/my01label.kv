@@ -1,0 +1,21 @@
+<CalcGridLayout>:
+	id: grid
+	rows: 2
+	padding: 10
+	spacing: 10
+
+	BoxLayout:
+		spacing: 10
+		Label:
+	        id: lbl
+			text: "empty"
+
+	BoxLayout:
+		spacing: 10
+		Button:
+			text: "start"
+			on_press: grid.pushbutton
+		Button:
+			text: "stop"
+			on_press: lbl.text = "empty"
+
